@@ -1,3 +1,0 @@
-Tuesday practice
-I can read file with cat
- I can copy and rename 
