@@ -16,6 +16,7 @@ grade-badge: Үсгэн дүн болон өнгөт тойргийг давха
 student-card: Сурагчийн оноо болон статусыг багтаасан картын зургийг гаргана (average3, grade-badge, final-status-г дуудна).
 3. Нэг тэнцсэн, нэг тэнцээгүй дуудлагын trace.
 Тэнцсэн үйлдэл (Eligible)
+
 (eligible? 80 90 70 85 8 10)
 (passing-average? 80 90 70) -> average3 = 80 -> #t
 (good-attendance? 85) -> #t
