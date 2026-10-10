@@ -1,0 +1,216 @@
+;; The first three lines of this file were inserted by DrRacket. They record metadata
+;; about the language level of this file in a form that our tools can easily process.
+#reader(lib "htdp-beginner-reader.ss" "lang")((modname grade-system) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
+;; Туслах function
+;; 1. sum3 ба average3
+;; sum3 : Number Number Number -> Number
+(define (sum3 a b c)
+  (+ a b c))
+
+;; average3 : Number Number Number -> Number
+;; гурван тооны дундаж. sum3-г дуудна.
+(define (average3 a b c)
+  (/ (sum3 a b c) 3))
+
+(check-expect (sum3 80 90 70) 240)
+(check-expect (average3 80 90 70) 80)
+(check-expect (average3 60 60 60) 60)
+
+
+;; 2. assignment-percent
+;; assignment-percent : Number Number -> Number
+;; хийсэн ба нийт даалгавар → гүйцэтгэлийн хувь (total > 0)
+(define (assignment-percent done total)
+  (* (/ done total) 100))
+
+(check-expect (assignment-percent 8 10) 80)
+(check-expect (assignment-percent 7 10) 70)
+(check-expect (assignment-percent 0 10) 0)
+
+;;Шалгуур бүрт нэг predicate
+;; 1. passing-average?
+;; passing-average? : Number Number Number -> Boolean
+;; average3 60 ба түүнээс дээш бол #t
+(define (passing-average? a b c)
+  (>= (average3 a b c) 60))
+
+(check-expect (passing-average? 60 60 60) #t)
+(check-expect (passing-average? 59 59 59) #f)
+(check-expect (passing-average? 100 80 0) #t)   ; дундаж яг 60
+
+
+;; 2. good-attendance?
+;; good-attendance? : Number -> Boolean
+;; ирц 80 ба түүнээс дээш бол #t
+(define (good-attendance? attendance)
+  (>= attendance 80))
+
+(check-expect (good-attendance? 80) #t)
+(check-expect (good-attendance? 79) #f)
+
+
+;; 3. assignments-complete?
+;; assignments-complete? : Number Number -> Boolean
+;; assignment-percent 70 ба түүнээс дээш бол #t. assignment-percent-г дуудна.
+(define (assignments-complete? done total)
+  (>= (assignment-percent done total) 70))
+
+(check-expect (assignments-complete? 7 10) #t)
+(check-expect (assignments-complete? 6 10) #f)
+(check-expect (assignments-complete? 0 10) #f)
+
+;eligible?: гурван predicate-ийг and-аар
+;; eligible? : Number Number Number Number Number Number -> Boolean
+;; s1 s2 s3 attendance completed total → гурван шалгуур бүгд үнэн бол #t
+(define (eligible? s1 s2 s3 attendance completed total)
+  (and (passing-average? s1 s2 s3)
+       (good-attendance? attendance)
+       (assignments-complete? completed total)))
+
+(check-expect (eligible? 80 90 70 85 8 10) #t)
+(check-expect (eligible? 80 90 70 79 8 10) #f)   ; ирц
+(check-expect (eligible? 59 59 59 100 10 10) #f) ; оноо
+(check-expect (eligible? 80 90 70 85 6 10) #f)   ; даалгавар
+;final-status: if + predicate
+;; final-status : Number Number Number Number Number Number -> String
+;; тэнцсэн бол "Eligible", үгүй бол "Not eligible"
+(define (final-status s1 s2 s3 attendance completed total)
+  (if (eligible? s1 s2 s3 attendance completed total)
+      "Eligible"
+      "Not eligible"))
+
+(check-expect (final-status 80 90 70 85 8 10) "Eligible")
+(check-expect (final-status 80 90 70 79 8 10) "Not eligible")
+
+
+;letter-grade: cond
+
+;; 1. letter-grade
+;; letter-grade : Number -> String
+;; дундаж оноо → "A" "B" "C" "D" "F"
+(define (letter-grade score)
+  (cond
+    [(>= score 90) "A"]
+    [(>= score 80) "B"]
+    [(>= score 70) "C"]
+    [(>= score 60) "D"]
+    [else "F"]))
+
+(check-expect (letter-grade 90) "A")
+(check-expect (letter-grade 89) "B")
+(check-expect (letter-grade 80) "B")
+(check-expect (letter-grade 79) "C")
+(check-expect (letter-grade 60) "D")
+(check-expect (letter-grade 59) "F")
+
+
+;; 2. student-grade
+;; student-grade : Number Number Number -> String
+;; гурван оноо → үсгэн дүн. average3 ба letter-grade-г дуудна.
+(define (student-grade s1 s2 s3)
+  (letter-grade (average3 s1 s2 s3)))
+
+(check-expect (student-grade 80 90 70) "B")
+(check-expect (student-grade 100 90 80) "A")
+
+(require 2htdp/image)
+
+;; --- 6-р алхам: Сурагчийн карт зурах ---
+
+;; 1. grade-color
+;; grade-color : Number -> String
+;; дундаж оноо → өнгө: 90+ "green", 80–89 "blue", 70–79 "gold", 60–69 "orange", бусад "red"
+(define (grade-color score)
+  (cond
+    [(>= score 90) "green"]
+    [(>= score 80) "blue"]
+    [(>= score 70) "gold"]
+    [(>= score 60) "orange"]
+    [else "red"]))
+
+(check-expect (grade-color 90) "green")
+(check-expect (grade-color 89) "blue")
+(check-expect (grade-color 60) "orange")
+(check-expect (grade-color 59) "red")
+(check-expect (grade-color 70) "gold")
+
+;; 2. grade-badge
+;; grade-badge : Number -> Image
+;; дундаж оноо → өнгөт тойрог дээр цагаан үсгэн дүн.
+(define (grade-badge score)
+  (overlay (text (letter-grade score) 24 "white")
+           (circle 30 "solid" (grade-color score))))
+
+(check-expect (grade-badge 95) (overlay (text "A" 24 "white") (circle 30 "solid" "green")))
+(check-expect (grade-badge 59) (overlay (text "F" 24 "white") (circle 30 "solid" "red")))
+
+
+;; 3. student-card
+;; student-card : Number Number Number Number Number Number -> Image
+;; s1 s2 s3 attendance completed total → тэмдэг, хажууд нь final-status-ийн текст.
+(define (student-card s1 s2 s3 attendance completed total)
+  (beside (grade-badge (average3 s1 s2 s3))
+          (text "   " 20 "black") ; зай гаргах зорилгоор
+          (text (final-status s1 s2 s3 attendance completed total) 20 "black")))
+
+(check-expect (student-card 80 90 70 85 8 10)
+              (beside (grade-badge 80) 
+                      (text "   " 20 "black")
+                      (text "Eligible" 20 "black")))
+
+
+;; --- 5. Trace жишээ (README-д бичих формат) ---
+
+;; Тэнцсэн trace:
+;; (eligible? 80 90 70 85 8 10)
+;; ; (passing-average? 80 90 70)    → average3 = 80 → #t
+;; ; (good-attendance? 85)          → #t
+;; ; (assignments-complete? 8 10)   → assignment-percent = 80 → #t
+;; ; (and #t #t #t)
+;; ; → #t
+
+;; Тэнцээгүй trace:
+;; (eligible? 80 90 70 79 8 10)
+;; ; (passing-average? 80 90 70)    → #t
+;; ; (good-attendance? 79)          → #f
+;; ; and нэг #f олмогц зогсоно, assignments-complete? бодогдохгүй
+;; ; → #f
+
+
+;; --- 7. Нэмэлт хэсэг ---
+
+;; 1. honor-roll?
+;; honor-roll? : Number Number Number Number -> Boolean
+;; s1 s2 s3 attendance: дундаж 90 ба түүнээс дээш, ирц 95 ба түүнээс дээш бол #t
+(define (honor-roll? s1 s2 s3 attendance)
+  (and (>= (average3 s1 s2 s3) 90)
+       (>= attendance 95)))
+
+(check-expect (honor-roll? 90 90 90 95) #t)
+(check-expect (honor-roll? 90 90 90 94) #f)
+(check-expect (honor-roll? 89 89 89 100) #f)
+
+
+;; 2. ineligibility-reason
+;; ineligibility-reason : Number Number Number Number Number Number -> String
+;; Хэд хэдэн шалгуур унавал эхнийхийг нь буцаана: оноо → ирц → даалгавар.
+(define (ineligibility-reason s1 s2 s3 attendance completed total)
+  (cond
+    [(not (passing-average? s1 s2 s3)) "Low score"]
+    [(not (good-attendance? attendance)) "Low attendance"]
+    [(not (assignments-complete? completed total)) "Missing assignments"]
+    [else "Eligible"]))
+
+(check-expect (ineligibility-reason 59 59 59 50 0 10) "Low score")
+(check-expect (ineligibility-reason 80 90 70 79 0 10) "Low attendance")
+(check-expect (ineligibility-reason 80 90 70 85 6 10) "Missing assignments")
+(check-expect (ineligibility-reason 80 90 70 85 8 10) "Eligible")
+
+
+;; 3. average5
+;; average5 : Number Number Number Number Number -> Number
+;; таван онооны дундаж
+(define (average5 a b c d e)
+  (/ (+ a b c d e) 5))
+
+(check-expect (average5 60 70 80 90 100) 80)
