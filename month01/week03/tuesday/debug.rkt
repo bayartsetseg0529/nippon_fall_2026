@@ -1,0 +1,32 @@
+;; The first three lines of this file were inserted by DrRacket. They record metadata
+;; about the language level of this file in a form that our tools can easily process.
+#reader(lib "htdp-beginner-reader.ss" "lang")((modname debug) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
+;; Дасгал 7A 4 эвдэрсэн function засах
+
+;; 1. Base case байхгүй
+;;Алдаа: Жагсаалт хоосон эсэхийг шалгах нөхцөл байхгүй тул жагсаалт дуусаад empty руу ороход first функц алдаа заана (first: expects a non-empty list).
+(define (sum-1 l)
+  (cond [(empty? l) 0]
+        [else (+ (first l) (sum-1 (rest l)))]))
+(check-expect (sum-1 (cons 1 (cons 2 empty))) 3)
+
+;; 2. Base case-ийн утга буруу
+;;Алдаа: Хоосон жагсаалтын нийлбэр математик ёсоор 0 байх ёстой атал 1 буцаахаар бичсэн тул нийлбэр буруу гарна.
+(define (sum-2 l)
+  (cond [(empty? l) 0]
+        [else (+ (first l) (sum-2 (rest l)))]))
+(check-expect (sum-2 (cons 1 (cons 2 empty))) 3)
+;; 3. count-items 1-ийн оронд first-ийг нэмж байна
+;;Алдаа: Энэ функц жагсаалт дахь элементүүдийн тоог  тоолох зориулалттай. Гэтэл (first l) буюу тухайн элементийн өөрийнх нь утгыг шууд нэмээд байна.
+(define (count-items-3 l)
+  (cond [(empty? l) 0]
+        [else (+ 1 (count-items-3 (rest l)))]))
+(check-expect (count-items-3 (cons 7 (cons 8 empty))) 2)
+;; 4. Recursive call жижиг бодлого дээр очихгүй байна (Stop товч!)
+(define (count-positive-4 l)
+  (cond [(empty? l) 0]
+        [(positive? (first l)) (+ 1 (count-positive-4 (rest l)))]
+        [else (count-positive-4 (rest l))]))
+(check-expect (count-positive-4 (cons 5 (cons -1 empty))) 1)
+
+
