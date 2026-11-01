@@ -6,18 +6,15 @@
 ;; name    : сурагчийн нэр
 ;; quiz    : quiz оноо, 0–100
 ;; project : project оноо, 0–100
-(define aki  (make-student "Munkhjin"  90 90))
-(define sora (make-student "Bilegt" 60 60))
-(define mina (make-student "Khulan" 95 91))
-(define ren  (make-student "Itgelt"  45 55))
-;;(make-student "Aki" 80 90)
-;;(student-name aki)
-;;(student-quiz aki)
-;;(student-project aki)
-;;(student? aki)
-(check-expect (student-name aki) "Munkhjin")
-(check-expect (student-quiz aki) 90)
-(check-expect (student-project aki) 90)
+(define aki  (make-student "Aki"  80 90))
+(define sora (make-student "Sora" 60 60))
+(define mina (make-student "Mina" 95 91))
+(define ren  (make-student "Ren"  45 55))
+(define khulan (make-student "Khulan" 90 100))
+(make-student "Aki" 80 90)
+(check-expect (student-name aki) "Aki")
+(check-expect (student-quiz sora) 60)
+(check-expect (student-project ren) 55)
 (check-expect (student? aki) #true)
 
 
