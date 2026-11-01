@@ -39,15 +39,6 @@ void check_int(int actual, int expected) {
     }
 }
 
-/* check_double : зөрүү 0.001-ээс бага бол PASS (L8: double яг биш) */
-void check_double(double actual, double expected) {
-    double diff = actual - expected;
-    if (diff < 0.001 && diff > -0.001) {
-        printf("PASS\n");
-    } else {
-        printf("FAIL: %f гарсан, %f хүлээсэн\n", actual, expected);
-    }
-}
 int main (void)
 {
     check_int(count_digits(90210), 5);

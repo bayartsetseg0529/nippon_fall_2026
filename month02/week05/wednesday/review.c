@@ -9,14 +9,6 @@ int count_multiples(int n, int k){
     }
     return count;
 }
-/* check_int : бүхэл тоо тэнцүү бол PASS (C-ийн check-expect) */
-void check_int(int actual, int expected) {
-    if (actual == expected) {
-        printf("PASS\n");
-    } else {
-        printf("FAIL: %d гарсан, %d хүлээсэн\n", actual, expected);
-    }
-}
 // sergeeh02 toog urwuulah
 int reverse_number(int n){
     int reversed =0;
@@ -38,15 +30,15 @@ int max3(int a, int b,int c){
     }
     return max;
 }
-/* check_double : зөрүү 0.001-ээс бага бол PASS (L8: double яг биш) */
-void check_double(double actual, double expected) {
-    double diff = actual - expected;
-    if (diff < 0.001 && diff > -0.001) {
+/* check_int : бүхэл тоо тэнцүү бол PASS (C-ийн check-expect) */
+void check_int(int actual, int expected) {
+    if (actual == expected) {
         printf("PASS\n");
     } else {
-        printf("FAIL: %f гарсан, %f хүлээсэн\n", actual, expected);
+        printf("FAIL: %d гарсан, %d хүлээсэн\n", actual, expected);
     }
 }
+
 int main(void){
     check_int(count_multiples(10, 3), 3);
     check_int(count_multiples(12, 4), 3);
