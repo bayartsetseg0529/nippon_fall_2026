@@ -1,71 +1,38 @@
 ;; The first three lines of this file were inserted by DrRacket. They record metadata
 ;; about the language level of this file in a form that our tools can easily process.
 #reader(lib "htdp-beginner-reader.ss" "lang")((modname Untitled) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
-;; The first three lines of this file were inserted by DrRacket. They record metadata
-;; about the language level of this file in a form that our tools can easily process.
-#reader(lib "htdp-beginner-reader.ss" "lang")((modname review) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
-;; sergeeh 01
-;; count-passing : List-of-students -> Number
-;; Жагсаалт дахь тэнцсэн сурагчдын тоог олно.
-(define-struct student [name score])
-(define hangai (make-student "Khangai" 45))           
-(define bat (make-student "Bat" 85))          
-(define saraa (make-student "Saraa" 70))       
-(define dorj (make-student "Dorj" 89.6))        
-(define students (list hangai bat saraa dorj))   
-;;Хилээс дээш сурагчид
-;; count-at-least : List-of-students Number -> Number
-;; эцсийн оноо нь n ба түүнээс дээш сурагчийн тоо
+;; 1. student-total   Дасгал 7A , 3 function
+(define-struct student (name quiz project))
 
-(define (count-at-least l n)
-  (cond
-    [(empty? l) 0]
-    [else
-     (if (>= (student-score (first l)) n)
-         (+ 1 (count-at-least (rest l) n))
-         (count-at-least (rest l) n))]))
-(check-expect (count-at-least empty 50) 0)
-(check-expect (count-at-least students 80) 2)
-(check-expect (count-at-least students 0) 4)
-;;sergeeh02
-(define (score->grade score)
-  (cond
-    [(>= score 90) "A"]
-    [(>= score 80) "B"]
-    [(>= score 70) "C"]
-    [(>= score 60) "D"]
-    [else "F"]))
-;; names-with-grade : List-of-students String -> List-of-strings
-;; Өгөгдсөн үнэлгээтэй сурагчдын нэрсийн жагсаалтыг буцаана
-(define (names-with-grade l g)
-  (cond
-    [(empty? l) empty]
-    [else
-     (if (string=? (score->grade (student-score (first l))) g)
-         (cons (student-name (first l)) (names-with-grade (rest l) g))
-         (names-with-grade (rest l) g))]))
+(define aki  (make-student "Aki"  80 90))
+(define sora (make-student "Sora" 60 60))
+(define mina (make-student "Mina" 95 91))
+(define ren  (make-student "Ren"  45 55))
+(define (student-total s)
+  (+ (student-quiz s)
+     (student-project s)))
+(check-expect (student-total aki) 170)
+(check-expect (student-total (make-student "Zero" 0 0)) 0)
+;; 2. project-better?
+(define (project-better? s)
+  (> (student-project s)
+     (student-quiz s)))
+(check-expect (project-better? aki) #true)
+(check-expect (project-better? sora) #false)
+(check-expect (project-better? mina) #false)
+;; 3. quiz-passed?
+(define (quiz-passed? s)
+  (>= (student-quiz s) 60))
+(check-expect (quiz-passed? sora) #true)
+(check-expect (quiz-passed? ren) #false)
+(check-expect (quiz-passed? (make-student "Uka" 59 100)) #false)
 
-(check-expect (names-with-grade students "B") (list "Bat" "Dorj")) 
-(check-expect (names-with-grade students "C") (list "Saraa"))      
-(check-expect (names-with-grade empty "A") empty)
-;; sergeeh03
+;; Dasgal 7B  Зураг: name-tag
+;; 1. name-tag
 (require 2htdp/image)
-
-(define (student-circle s)
-  (if (>= (student-score s) 60)
-      (circle 10 "solid" "green")
-      (circle 10 "solid" "red")))
-
-(define (grade-row l)
-  (cond
-    [(empty? l) empty-image]
-    [else
-     (beside (student-circle (first l))
-             (grade-row (rest l)))]))
-
-(check-expect (grade-row empty) empty-image)
-
-(define aki (make-student "Aki" 75)) 
-(define ren (make-student "Ren" 40)) 
-(check-expect (grade-row (list aki ren))
-              (beside (circle 10 "solid" "green") (circle 10 "solid" "red")))
+(define (name-tag s)
+  (overlay (text (student-name s) 18 "black")
+           (rectangle 120 36 "outline" "blue")))
+(check-expect (name-tag aki)
+              (overlay (text "Aki" 18 "black") (rectangle 120 36 "outline" "blue")))
+(name-tag aki)
