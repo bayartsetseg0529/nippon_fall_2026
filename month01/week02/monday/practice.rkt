@@ -27,10 +27,7 @@
 (rectangle-cost 2 3 100)
 
 ;Dasgal3A
-;; ==========================================
 ;; A. Хэмжээний нэгж
-;; ==========================================
-
 ;; bytes-to-bits : Number -> Number
 ;; byte-ийн тоог bit болгоно (1 byte = 8 bit)
 (define (bytes-to-bits bytes)
