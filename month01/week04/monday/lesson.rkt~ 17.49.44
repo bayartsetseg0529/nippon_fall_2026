@@ -1,0 +1,25 @@
+;; The first three lines of this file were inserted by DrRacket. They record metadata
+;; about the language level of this file in a form that our tools can easily process.
+#reader(lib "htdp-beginner-reader.ss" "lang")((modname lesson) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
+;;List
+;; cons a (const b
+
+(define-struct book(tittle author pages))
+;; A book is (make-book String String Number)
+
+(define b1 (make-book "Harry Potter" "Rowling" 320))
+(define b2 (make-book "Бяцхан ханхүү" "Exupéry" 96))
+(define b3 (make-book "Нууц товчоо" "Тодорхойгүй" 300))
+(book-tittle b2)
+;; b3 heden huudas
+(book-pages b3)
+;; b1 zohiogchin hen be
+(book-author b1)
+
+(define(long-book? book)
+  (>(book-pages book) 300))
+
+(check-expect (long-book? b1) #true)
+(check-expect (long-book? b2) #false)
+(check-expect (long-book? b3) #false)   ; яг 300
+(check-expect (long-book? (make-book "A" "B" 301)) #true)
