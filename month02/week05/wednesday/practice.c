@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #include <stdio.h>
 int count_digits(int n)
 {
@@ -11,7 +10,6 @@ int count_digits(int n)
 
     }
 }
-=======
 //Dasgal 3b
 // 1. count_digits
 #include <stdio.h>
