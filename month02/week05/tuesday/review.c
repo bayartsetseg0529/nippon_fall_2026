@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 // sergeeh 01 Хоёр квадрат 
 #include <stdio.h>
 int square_sum(int a, int b) {
@@ -42,4 +40,4 @@ int main (void){
     return 0;
 
 }
->>>>>>> edd85bb23f8e45e36b671815f8a5f63de9f51cce
+

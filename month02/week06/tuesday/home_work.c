@@ -57,35 +57,19 @@ int replace_char(char s[], char from, char to)
 }
 
 int main(void){
-    // 1. isPalendromeStr шалгалт
-    printf("isPalendromeStr(\"level\") = %d\n", isPalendromeStr("level"));
-    printf("isPalendromeStr(\"abba\")  = %d\n", isPalendromeStr("abba"));
-    printf("isPalendromeStr(\"abc\")   = %d\n", isPalendromeStr("abc"));
-    printf("isPalendromeStr(\"\")      = %d\n\n", isPalendromeStr(""));
-
-    // 2. count_vowels шалгалт
-    printf("count_vowels(\"banana\")   = %d\n", count_vowels("banana"));
-    printf("count_vowels(\"education\")= %d\n", count_vowels("education"));
-    printf("count_vowels(\"sky\")      = %d\n\n", count_vowels("sky"));
-
-    // 3. caesar шалгалт
-    char s1[] = "abc"; caesar(s1, 1);
-    printf("caesar(\"abc\", 1)        = %s\n", s1);
-
-    char s2[] = "xyz"; caesar(s2, 3);
-    printf("caesar(\"xyz\", 3)        = %s\n", s2);
-
-    char s3[] = "hi there"; caesar(s3, 13);
-    printf("caesar(\"hi there\", 13)   = %s\n\n", s3);
-
-    // 4. replace_char шалгалт
-    char s4[] = "banana";
-    int count4 = replace_char(s4, 'a', 'o');
-    printf("replace_char(\"banana\")   = %s (соригдсон: %d)\n", s4, count4);
-
-    char s5[] = "sky";
-    int count5 = replace_char(s5, 'a', 'o');
-    printf("replace_char(\"sky\")      = %s (соригдсон: %d)\n", s5, count5);
+    checkInt(isPalendromeStr("level"),1);
+    checkInt(isPalendromeStr("abba"),1);
+    checkInt(isPalendromeStr("abc"),0);
+    checkInt(isPalendromeStr(""),1);
+    checkInt(count_vowels("banana"), 3);
+    checkInt(count_vowels("education"), 5);
+    checkInt(count_vowels("sky"), 0);
+    char s1[] = "abc"; caesar(s1, 1); checkString(s1, "bcd");
+    char s2[] = "xyz"; caesar(s2, 3); checkString(s2, "abc"); 
+    char s3[] = "hi there"; caesar(s3, 13);  checkString(s3, "uv gurer");
+    char s4[] = "banana";   checkInt(replace_char(s4, 'a', 'o'), 3); checkString(s4, "bonono");
+    char s5[] = "sky";      checkInt(replace_char(s5, 'a', 'o'), 0); checkString(s5, "sky");
 
     return 0;
+
 }
