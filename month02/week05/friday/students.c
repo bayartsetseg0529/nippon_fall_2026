@@ -18,30 +18,28 @@ double final_score(struct student s) {
 }
 
 int count_passing_students(struct student students[], int size) {
-    int counter = 0;
+    int c = 0;
     for (int i = 0; i < size; i++) {
-        double finalScore = final_score(students[i]);
-        if (finalScore >= 60) {
-            counter = counter + 1;
+        if (final_score (students[i]) >= 60) {
+            c = c + 1;
         }
     }
-    return counter; 
+    return c; 
 }
 
 int best_index(struct student students[], int size) 
-{ int bestIndex= 0;
-     for (int i = 0; i < size; i++) 
+{ int best = 0;
+     for (int i = 1; i < size; i++) 
      { 
-        if (final_score(students[i]) > final_score(students[bestIndex])) 
+        if (final_score(students[i]) > final_score(students[best])) 
         { 
-            bestIndex = i; 
+            best = i; 
         }
      } 
-     return bestIndex;
+     return best;
      }
      double average_final(struct student students[], int size)
-     {
-{ 
+     { 
     double sum = 0; 
     for (int i = 0; i < size; i++) 
     { 
@@ -50,7 +48,6 @@ int best_index(struct student students[], int size)
     return sum / size;
  }
 
-     }
 char letter_grade(double n)
     {
     if (n >= 90) 
