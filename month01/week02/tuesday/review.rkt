@@ -2,18 +2,12 @@
 ;; about the language level of this file in a form that our tools can easily process.
 #reader(lib "htdp-beginner-reader.ss" "lang")((modname review) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
 ;Sergeeh1
-;; kb-to-bytes : Number -> Number
-;; килобайтыг байт руу хөрвүүлэх (kB = 1000 byte)
 (define (kb-to-bytes kb)
   (* kb 1000))
 (kb-to-bytes 2)
-;; bytes-to-bits : Number -> Number
-;; байтыг бит рүү хөрвүүлэх (1 byte = 8 bits)
 (define (bytes-to-bits bytes)
   (* bytes 8))
 (bytes-to-bits 2)
-;; kb-to-bits : Number -> Number
-;; kb-to-bytes болон bytes-to-bits функцийг ашиглан байгуулах (composition)
 (define (kb-to-bits kb)
   (bytes-to-bits (kb-to-bytes kb)))
 (kb-to-bits 2)
