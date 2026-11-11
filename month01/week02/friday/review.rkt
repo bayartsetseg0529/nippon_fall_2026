@@ -1,7 +1,7 @@
 ;; The first three lines of this file were inserted by DrRacket. They record metadata
 ;; about the language level of this file in a form that our tools can easily process.
 #reader(lib "htdp-beginner-reader.ss" "lang")((modname review) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
-;Сэргээх 1 ; Хувь бодох
+;Сэргээх 1 Хувь бодох
 ;; attendance-percent : Number Number -> Number
 ;; ирсэн өдөр, нийт өдөр (0-ээс их) → ирцийн хувь
 (define (attendance-percent present total)
@@ -10,7 +10,7 @@
 (check-expect (attendance-percent 18 20) 90)
 (check-expect (attendance-percent 0 20) 0)
 
-;Сэргээх 2 ;Хоёр нөхцөлтэй predicate
+;Сэргээх 2 Хоёр нөхцөлтэй predicate
 ;; can-retake? : Number Number -> Boolean
 ;; оноо 60-аас бага, ирц 80 ба түүнээс дээш бол #t
 (define (can-retake? score attendance)
@@ -20,7 +20,7 @@
 (check-expect (can-retake? 60 80) #f)
 (check-expect (can-retake? 59 79) #f)
 
-;Сэргээх 3; cond + predicate
+;Сэргээх 3 cond + predicate
 ;; final-label : Number Number -> String
 ;;   оноо >= 60 ба ирц >= 80   "pass"
 ;;   can-retake? үнэн бол         "retake"
