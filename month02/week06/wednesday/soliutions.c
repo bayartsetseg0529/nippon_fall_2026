@@ -54,9 +54,9 @@ int selectionSort(int a[], int n)
     return swaps;
 }
 void printBars(int a[], int n) {
-    for (int i = 0; i < n; i++) {
+    for (int i = 0; i < n; i++) 
+    {
         printf("%3d ", a[i]);
-        
         int stars = a[i] / 10; 
         for (int j = 0; j < stars; j++) 
         {
