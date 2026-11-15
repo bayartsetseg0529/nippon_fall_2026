@@ -55,6 +55,7 @@ void print_report(int a[], int n) {
 int main(void) {
     int scores[5] = {70, 82, 95, 63, 88};
     
+    
     printf("--- Diagram ---\n");
     print_bars(scores, 5);
     
