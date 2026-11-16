@@ -1,13 +1,13 @@
 // sergeeh 1 count_multiples
 #include <stdio.h>
 int count_multiples(int n, int k){
-    int count = 0;
+    int c = 0;
     for( int i = 1; i<=n; i++){
         if (i%k ==0){
-            count++;
+            c = c + 1;
         }
     }
-    return count;
+    return c;
 }
 // sergeeh02 toog urwuulah
 int reverse_number(int n){
