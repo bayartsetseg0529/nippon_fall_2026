@@ -16,6 +16,13 @@ public class Hero
         gold =0;
         
     }
+    // default constructor
+    public Hero(){
+    name = "Bayartsetseg";
+    health = 100;
+    gold =0;
+    
+    }
     public void findGold(int amount){
         gold = gold + amount;
         System.out.println(name + " found" + amount + "gold ! Total:" +gold);
